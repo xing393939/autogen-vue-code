@@ -24,6 +24,7 @@ jobs:
         run: |
           cd vue-preview-ui
           npm i
+          npm config set color false
           deno run -A ../prompts/vue-ui-gen.ts
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
