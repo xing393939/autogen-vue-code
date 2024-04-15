@@ -63,19 +63,16 @@ ${PLACEHOLDER_CODE}
     stdout: "piped",
     stderr: "piped"
   });
-  (async () => {
-    for await (const chunk of cmd.stdout.readable) {
-      console.log(new TextDecoder().decode(chunk))
-    }
-  })();
+
+  for await (const chunk of cmd.stdout.readable) {
+    console.log(new TextDecoder().decode(chunk))
+  }
   var cmdErr = '';
-  (async () => {
-    for await (const chunk of cmd.stderr.readable) {
-      cmdErr += new TextDecoder().decode(chunk);
-    }
-  })();
+  for await (const chunk of cmd.stderr.readable) {
+    cmdErr += new TextDecoder().decode(chunk);
+  }
   cmd.close();
-  
+
   if (cmdErr) {
     throw new Error(cmdErr);
   }
