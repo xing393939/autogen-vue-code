@@ -3,7 +3,7 @@ import { join } from "https://deno.land/std@0.188.0/path/mod.ts";
 import "npm:@babel/parser";
 
 const systemPrompt = await Deno.readTextFile(
-  join('prompts', "./vue-ui-gen.md")
+  join('../prompts', "./vue-ui-gen.md")
 );
 
 const PLACEHOLDER_CODE = `<script setup>
@@ -55,7 +55,7 @@ ${PLACEHOLDER_CODE}
   );
   console.log(JSON.stringify(usage, null, 2));
   await Deno.writeTextFile(
-    join('vue-preview-ui', "./src/Preview.vue"), code
+    join('../vue-preview-ui', "./src/Preview.vue"), code
   );
 
   const cmd = Deno.run({
