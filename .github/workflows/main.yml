@@ -22,13 +22,9 @@ jobs:
           RUN_NUMBER: ${{ github.run_number }}
           ACTOR: ${{ github.actor }}
         run: |
-          echo "$EVENT_ID"
-          deno run -A prompts/vue-ui-gen.ts
-      - name: Install and Build
-        run: |
           cd vue-preview-ui
           npm i
-          npm run build
+          deno run -A ../prompts/vue-ui-gen.ts
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
