@@ -19,7 +19,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          EVENT_ID: ${{ github.event.id }}
+          EVENT_ID: ${{ toJson(github) }}
           ACTOR: ${{ github.actor }}
         run: |
           echo "$EVENT_ID"
