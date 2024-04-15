@@ -65,12 +65,12 @@ ${PLACEHOLDER_CODE}
   });
   (async () => {
     for await (const chunk of cmd.stdout.readable) {
-      console.log(chunk, new TextDecoder().decode(chunk))
+      console.log(new TextDecoder().decode(chunk))
     }
   })();
   (async () => {
     for await (const chunk of cmd.stderr.readable) {
-      console.log(chunk, new TextDecoder().decode(chunk))
+      console.log(new TextDecoder().decode(chunk))
     }
   })();
   console.log(cmd.status());
