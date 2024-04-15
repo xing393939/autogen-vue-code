@@ -3,8 +3,6 @@ name: Create
 on:
   issues:
     types: [edited, labeled, opened]
-  issue_comment:
-    types: [created, edited]
 
 jobs:
   handle_issue:
