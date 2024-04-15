@@ -23,5 +23,5 @@ jobs:
       - name: Install and Build
         run: |
           cd vue-preview-ui
-          npm ci
+          npm i
           npm run build
