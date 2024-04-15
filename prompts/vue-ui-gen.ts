@@ -64,8 +64,9 @@ ${PLACEHOLDER_CODE}
     stderr: "piped"
   });
   const output = await cmd.output();
+  const outStr = new TextDecoder().decode(output);
   cmd.close();
-  console.log(output);
+  console.log(outStr);
 
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
