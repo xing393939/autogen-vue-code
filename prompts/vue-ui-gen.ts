@@ -59,7 +59,7 @@ ${PLACEHOLDER_CODE}
   );
 
   const cmd = Deno.run({
-    cmd: ["npm", "--no-color", "run", "build"],
+    cmd: ["npm", "run", "build", "--no-color"],
     stdout: "piped",
     stderr: "piped"
   });
