@@ -73,8 +73,8 @@ ${PLACEHOLDER_CODE}
       console.log(chunk, new TextDecoder().decode(chunk))
     }
   })();
-  cmd.close();
   console.log(cmd.status());
+  cmd.close();
 
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
