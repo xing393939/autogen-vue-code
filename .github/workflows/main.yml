@@ -25,10 +25,6 @@ jobs:
           cd vue-preview-ui
           npm i
           deno run -A ../prompts/vue-ui-gen.ts
-      - name: Build
-        run: |
-          cd vue-preview-ui
-          npm run build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
