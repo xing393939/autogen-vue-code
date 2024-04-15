@@ -63,10 +63,18 @@ ${PLACEHOLDER_CODE}
     stdout: "piped",
     stderr: "piped"
   });
-  const output = await cmd.output();
-  const outStr = new TextDecoder().decode(output);
+  (async () => {
+    for await (const chunk of cmd.stdout.readable) {
+      console.log(chunk, new TextDecoder().decode(chunk))
+    }
+  })();
+  (async () => {
+    for await (const chunk of cmd.stderr.readable) {
+      console.log(chunk, new TextDecoder().decode(chunk))
+    }
+  })();
   cmd.close();
-  console.log(outStr);
+  console.log(cmd.status());
 
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
