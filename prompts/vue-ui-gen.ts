@@ -75,7 +75,7 @@ ${PLACEHOLDER_CODE}
   const runNumber = Deno.env.get("RUN_NUMBER");
   var body = `[Preview UI](https://xing393939.github.io/autogen-vue-code/${runNumber}) \n\n ${description}`;
   if (cmdErr) {
-    body = cmdErr;
+    body = '```\n'+cmdErr+'\n```';
   }
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
