@@ -72,7 +72,9 @@ type IssueEvent = {
   actor: { login: string };
   action: string;
   issue: {
+    url: string;
     body: string;
+    title: string;
     number: number;
     labels: { name: string }[];
     user: { login: string };

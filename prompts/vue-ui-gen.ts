@@ -1,4 +1,4 @@
-import { getCode, getIssueEvent, getOwnerAndRepo, getConnectedIssue } from "./common.ts";
+import { getCode, getIssueEvent, getOwnerAndRepo, octokit } from "./common.ts";
 import { join } from "https://deno.land/std@0.188.0/path/mod.ts";
 import "npm:@babel/parser";
 
@@ -14,24 +14,11 @@ const props = defineProps({});
   <p>placeholder</p>
 </template>`;
 
-async function getPrompt() {
-  const { githubEvent, eventName } = await getIssueEvent();
-  console.log(
-    githubEvent.action,
-    eventName,
-    githubEvent.issue,
-    githubEvent.comment,
-    githubEvent.actor
-  );
-  const { owner, repo } = getOwnerAndRepo();
-  const issue = await getConnectedIssue(owner, repo, githubEvent.issue.body);
-  console.log(issue);
-  return issue.body;
-}
-
 async function main() {
   //var prompt = 'a login form', images = [];
-  var prompt = await getPrompt(), images = [];
+  const { githubEvent, eventName } = await getIssueEvent();
+  const { owner, repo } = getOwnerAndRepo();
+  var prompt = githubEvent.issue.title, images = [];
   prompt += `
 Previously you already implemented the following code, use it as a reference and meet my new requirements:
 \`\`\`vue
@@ -70,6 +57,15 @@ ${PLACEHOLDER_CODE}
   await Deno.writeTextFile(
     join('vue-preview-ui', "./src/Preview.vue"), code
   );
+  const issueNumber = parseInt(
+    githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
+  );
+  await octokit.rest.issues.createComment({
+    owner,
+    repo,
+    issue_number: issueNumber,
+    body: `${description}`,
+  });
 }
 
 main();
