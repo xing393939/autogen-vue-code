@@ -19,7 +19,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          EVENT_ID: ${{ toJson(github) }}
+          RUN_NUMBER: ${{ github.run_number }}
           ACTOR: ${{ github.actor }}
         run: |
           echo "$EVENT_ID"
@@ -33,5 +33,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: vue-preview-ui/dist
-          target-folder: ${{ github.event.id }}
+          target-folder: ${{ github.run_number }}
           token: ${{ secrets.PERSONAL_TOKEN }}
