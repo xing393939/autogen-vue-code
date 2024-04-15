@@ -63,7 +63,6 @@ ${PLACEHOLDER_CODE}
     stdout: "piped",
     stderr: "piped"
   });
-
   for await (const chunk of cmd.stdout.readable) {
     console.log(new TextDecoder().decode(chunk))
   }
@@ -73,20 +72,23 @@ ${PLACEHOLDER_CODE}
   }
   cmd.close();
 
+  const runNumber = Deno.env.get("RUN_NUMBER");
+  var body = `[Preview UI](https://xing393939.github.io/autogen-vue-code/${runNumber}) \n\n ${description}`;
   if (cmdErr) {
-    throw new Error(cmdErr);
+    body = cmdErr;
   }
-
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
   );
-  const runNumber = Deno.env.get("RUN_NUMBER");
   await octokit.rest.issues.createComment({
     owner,
     repo,
     issue_number: issueNumber,
-    body: `[Preview UI](https://xing393939.github.io/autogen-vue-code/${runNumber}) \n\n ${description}`,
+    body: body,
   });
+  if (cmdErr) {
+    throw new Error(cmdErr);
+  }
 }
 
 main();
