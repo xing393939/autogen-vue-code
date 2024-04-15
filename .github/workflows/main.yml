@@ -21,7 +21,7 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           RUN_NUMBER: ${{ github.run_number }}
           ACTOR: ${{ github.actor }}
-          NODE_DISABLE_COLORS: true
+          NO_COLOR: true
         run: |
           cd vue-preview-ui
           npm i
