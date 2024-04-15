@@ -1,9 +1,10 @@
 name: Create
 
 on:
-  push:
-    branches:
-      - main
+  issues:
+    types: [edited, labeled, opened]
+  issue_comment:
+    types: [created, edited]
 
 jobs:
   handle_issue:
