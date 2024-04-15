@@ -68,13 +68,17 @@ ${PLACEHOLDER_CODE}
       console.log(new TextDecoder().decode(chunk))
     }
   })();
+  var cmdErr = '';
   (async () => {
     for await (const chunk of cmd.stderr.readable) {
-      console.log(new TextDecoder().decode(chunk))
+      cmdErr += new TextDecoder().decode(chunk);
     }
   })();
-  console.log(cmd.status());
   cmd.close();
+  
+  if (cmdErr) {
+    throw new Error(cmdErr);
+  }
 
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
