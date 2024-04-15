@@ -57,6 +57,16 @@ ${PLACEHOLDER_CODE}
   await Deno.writeTextFile(
     join('vue-preview-ui', "./src/Preview.vue"), code
   );
+
+  const cmd = Deno.run({
+    cmd: ["npm", "run", "build"],
+    stdout: "piped",
+    stderr: "piped"
+  });
+  const output = await cmd.output();
+  cmd.close();
+  console.log(output);
+
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
   );
