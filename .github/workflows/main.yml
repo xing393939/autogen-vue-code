@@ -19,8 +19,11 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          EVENT_ID: ${{ github.event.id }}
           ACTOR: ${{ github.actor }}
-        run: deno run -A prompts/vue-ui-gen.ts
+        run: |
+          echo "$EVENT_ID"
+          deno run -A prompts/vue-ui-gen.ts
       - name: Install and Build
         run: |
           cd vue-preview-ui
