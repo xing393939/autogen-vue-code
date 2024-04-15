@@ -12,13 +12,11 @@ const props = defineProps({});
 </script>
 
 <template>
-  <p>Dewhale placeholder</p>
+  <p>placeholder</p>
 </template>`;
 
 async function main() {
-  var prompt = 'a login form',
-    images = [];
-
+  var prompt = 'a login form', images = [];
   prompt += `
 Previously you already implemented the following code, use it as a reference and meet my new requirements:
 \`\`\`vue
