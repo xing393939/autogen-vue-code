@@ -25,3 +25,8 @@ jobs:
           cd vue-preview-ui
           npm i
           npm run build
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: vue-preview-ui/dist
+          token: ${{ secrets.PERSONAL_TOKEN }}
