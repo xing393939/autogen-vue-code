@@ -1,0 +1,22 @@
+name: Create
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  handle_issue:
+    runs-on: ubuntu-latest
+    name: Create
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: 1.38.3
+      - name: generate UI
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: deno run -A prompts/vue-ui-gen.ts
