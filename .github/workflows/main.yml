@@ -20,3 +20,8 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: deno run -A prompts/vue-ui-gen.ts
+      - name: Install and Build
+        run: |
+          cd vue-preview-ui
+          npm ci
+          npm run build
