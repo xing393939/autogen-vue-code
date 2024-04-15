@@ -64,7 +64,7 @@ ${PLACEHOLDER_CODE}
     owner,
     repo,
     issue_number: issueNumber,
-    body: `[https://xing393939.github.io/autogen-vue-code](Preview UI) \n\n ${description}`,
+    body: `[Preview UI](https://xing393939.github.io/autogen-vue-code/?${issueNumber}) \n\n ${description}`,
   });
 }
 
