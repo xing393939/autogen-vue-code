@@ -1,10 +1,9 @@
-import { getCode } from "./common.ts";
+import { getCode, getIssueEvent, getOwnerAndRepo, getConnectedIssue } from "./common.ts";
 import { join } from "https://deno.land/std@0.188.0/path/mod.ts";
 import "npm:@babel/parser";
 
-const __dirname = 'prompts';
 const systemPrompt = await Deno.readTextFile(
-  join(__dirname, "./vue-ui-gen.md")
+  join('prompts', "./vue-ui-gen.md")
 );
 
 const PLACEHOLDER_CODE = `<script setup>
@@ -15,8 +14,24 @@ const props = defineProps({});
   <p>placeholder</p>
 </template>`;
 
+async function getPrompt() {
+  const { githubEvent, eventName } = await getIssueEvent();
+  console.log(
+    githubEvent.action,
+    eventName,
+    githubEvent.issue,
+    githubEvent.comment,
+    githubEvent.actor
+  );
+  const { owner, repo } = getOwnerAndRepo();
+  const issue = await getConnectedIssue(owner, repo, githubEvent.issue.body);
+  console.log(issue);
+  return issue.body;
+}
+
 async function main() {
-  var prompt = 'a login form', images = [];
+  //var prompt = 'a login form', images = [];
+  var prompt = await getPrompt(), images = [];
   prompt += `
 Previously you already implemented the following code, use it as a reference and meet my new requirements:
 \`\`\`vue
@@ -52,6 +67,9 @@ ${PLACEHOLDER_CODE}
     "gpt-3.5-turbo"
   );
   console.log(JSON.stringify(usage, null, 2));
+  await Deno.writeTextFile(
+    join('vue-preview-ui', "./src/Preview.vue"), code
+  );
 }
 
 main();

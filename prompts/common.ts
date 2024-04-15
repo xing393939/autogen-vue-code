@@ -85,7 +85,8 @@ type IssueEvent = {
 };
 
 const PatchedOctokit = Octokit.plugin(commitPlugin);
-const ghToken = Deno.env.get("GH_TOKEN");
+const ghToken = Deno.env.get("PERSONAL_TOKEN");
+//assert(ghToken, "failed to get github token");
 
 export const octokit: Octokit = new PatchedOctokit({
   auth: ghToken,
@@ -159,7 +160,7 @@ async function getConnectedPr(
   return nodes[0]?.source.number;
 }
 
-async function getConnectedIssue(owner: string, repo: string, prBody: string) {
+export async function getConnectedIssue(owner: string, repo: string, prBody: string) {
   const issueNumber = parseInt(
     prBody.match(/\[Dewhale\] This PR implements #(\d+),/)?.[1] || ""
   );
@@ -383,7 +384,7 @@ export async function getIssueEvent() {
   };
 }
 
-function getOwnerAndRepo() {
+export function getOwnerAndRepo() {
   const owner = Deno.env.get("GITHUB_REPOSITORY_OWNER");
   assert(owner, "failed to get repo owner");
 
