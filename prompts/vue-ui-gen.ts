@@ -60,11 +60,12 @@ ${PLACEHOLDER_CODE}
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
   );
+  const runNumber = Deno.env.get("RUN_NUMBER");
   await octokit.rest.issues.createComment({
     owner,
     repo,
     issue_number: issueNumber,
-    body: `[Preview UI](https://xing393939.github.io/autogen-vue-code/?${issueNumber}) \n\n ${description}`,
+    body: `[Preview UI](https://xing393939.github.io/autogen-vue-code/?${runNumber}) \n\n ${description}`,
   });
 }
 
