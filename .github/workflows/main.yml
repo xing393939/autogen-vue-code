@@ -27,8 +27,8 @@ jobs:
           npm i
           deno run -A ../prompts/vue-ui-gen.ts
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          folder: vue-preview-ui/dist
-          target-folder: ${{ github.run_number }}
-          token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: vue-preview-ui/dist
+          destination_dir: ${{ github.run_number }}
+          github_token: ${{ secrets.PERSONAL_TOKEN }}
