@@ -26,14 +26,6 @@ jobs:
           cd vue-preview-ui
           npm i
           deno run -A ../prompts/vue-ui-gen.ts
-      - name: Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: team_XxHbDs2RhY8BQkPfmUQOARhd
-          vercel-project-id: Qmd1SNdXw4KXwdbNQ5swM87bAGeyA6zHX9R9sSN2jWpzu6
-          github-comment: false
-          working-directory: ./vue-preview-ui/dist
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
