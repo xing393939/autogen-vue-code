@@ -18,7 +18,7 @@ jobs:
           path: vue-preview-ui/node_modules
           key: ${{ runner.os }}-${{ matrix.node-version }}-nodeModule-${{ hashFiles('package.json') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-nodeModule
+            ${{ runner.os }}-${{ matrix.node-version }}-nodeModule-
       - name: Npm install
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: cd vue-preview-ui && npm i
