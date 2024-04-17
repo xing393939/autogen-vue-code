@@ -14,42 +14,14 @@ const props = defineProps({});
   <p>placeholder</p>
 </template>`;
 
-async function main() {
-  //var prompt = 'a login form', images = [];
-  const { githubEvent, eventName } = await getIssueEvent();
-  const { owner, repo } = getOwnerAndRepo();
-  var prompt = githubEvent.issue.title, images = [];
-  prompt += `
-Previously you already implemented the following code, use it as a reference and meet my new requirements:
-\`\`\`vue
-${PLACEHOLDER_CODE}
-\`\`\`
-`;
-
+async function cmdRun(chatList) {
   const { code, usage, description } = await getCode(
     [
       {
         role: "system",
         content: systemPrompt,
       },
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: prompt,
-          },
-          ...images.map(
-            (image) =>
-            ({
-              type: "image_url",
-              image_url: {
-                url: image,
-              },
-            } as const)
-          ),
-        ],
-      },
+      ...chatList,
     ],
     "gpt-3.5-turbo"
   );
@@ -71,6 +43,44 @@ ${PLACEHOLDER_CODE}
     cmdErr += new TextDecoder().decode(chunk);
   }
   cmd.close();
+  return { code, description, cmdErr }
+}
+
+async function main() {
+  //var prompt = 'a login form', images = [];
+  const { githubEvent, eventName } = await getIssueEvent();
+  const { owner, repo } = getOwnerAndRepo();
+  var prompt = githubEvent.issue.title;
+  prompt += `
+Previously you already implemented the following code, use it as a reference and meet my new requirements:
+\`\`\`vue
+${PLACEHOLDER_CODE}
+\`\`\`
+`;
+
+  var firstList = [{
+    role: "user",
+    content: [
+      {
+        type: "text",
+        text: prompt,
+      }
+    ],
+  }];
+  var { code, description, cmdErr } = await cmdRun(firstList);
+  if (cmdErr) {
+    firstList.push({
+      role: "assistant",
+      content: [{ type: "text", text: '```vue\n' + code + '\n```' }],
+    });
+    const newPrompt = `I got the following error when using your code: \n\n ${cmdErr} \n\n Please regenerate it and meet my new requirements.`
+    firstList.push({
+      role: "user",
+      content: [{ type: "text", text: newPrompt }],
+    });
+    console.log(firstList);
+    var { code, description, cmdErr } = await cmdRun(firstList);
+  }
 
   const runNumber = Deno.env.get("RUN_NUMBER");
   var body = `[Preview UI](https://xing393939.github.io/autogen-vue-code/${runNumber}) \n\n ${description}`;
