@@ -36,7 +36,7 @@ jobs:
           RUN_NUMBER: ${{ github.run_number }}
           ACTOR: ${{ github.actor }}
           NO_COLOR: true
-        run: cd vue-preview-ui && deno run -A --vendor --node-modules-dir --no-remote ../prompts/vue-ui-gen.ts
+        run: cd vue-preview-ui && deno run -A --vendor --node-modules-dir ../prompts/vue-ui-gen.ts
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
