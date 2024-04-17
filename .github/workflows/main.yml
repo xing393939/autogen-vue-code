@@ -11,21 +11,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Cache node_modules
-        id: cache-node-modules
-        uses: actions/cache@v2
-        with:
-          path: vue-preview-ui/node_modules
-          key: ${{ runner.os }}-nodeModule-${{ hashFiles('package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nodeModule-
-      - name: Npm install
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: cd vue-preview-ui && npm i
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: 1.38.3
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            vue-preview-ui/vendor
+            vue-preview-ui/node_modules
+          key: ${{ runner.os }}-nodeModules-${{ hashFiles('package.json') }}
+      - name: Npm install
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          cd vue-preview-ui
+          npm i
+          deno cache --vendor ../prompts/vue-ui-gen.ts
       - name: generate UI
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
