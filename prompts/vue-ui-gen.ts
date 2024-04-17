@@ -73,7 +73,7 @@ ${PLACEHOLDER_CODE}
       role: "assistant",
       content: [{ type: "text", text: '```vue\n' + code + '\n```' }],
     });
-    const newPrompt = `I got the following error when using your code: \n\n ${cmdErr} \n\n Please regenerate it and meet my new requirements.`
+    const newPrompt = `I got the following error when using your code: \n\n ${cmdErr} \n\n Please modify your code and meet my new requirements.`
     firstList.push({
       role: "user",
       content: [{ type: "text", text: newPrompt }],
