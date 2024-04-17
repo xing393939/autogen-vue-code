@@ -47,7 +47,6 @@ async function cmdRun(chatList) {
 }
 
 async function main() {
-  //var prompt = 'a login form', images = [];
   const { githubEvent, eventName } = await getIssueEvent();
   const { owner, repo } = getOwnerAndRepo();
   var prompt = githubEvent.issue.title;
@@ -69,6 +68,7 @@ ${PLACEHOLDER_CODE}
   }];
   var { code, description, cmdErr } = await cmdRun(firstList);
   if (cmdErr) {
+    console.log(cmdErr);
     firstList.push({
       role: "assistant",
       content: [{ type: "text", text: '```vue\n' + code + '\n```' }],
@@ -78,14 +78,13 @@ ${PLACEHOLDER_CODE}
       role: "user",
       content: [{ type: "text", text: newPrompt }],
     });
-    console.log(firstList);
     var { code, description, cmdErr } = await cmdRun(firstList);
   }
 
   const runNumber = Deno.env.get("RUN_NUMBER");
   var body = `[Preview UI](https://xing393939.github.io/autogen-vue-code/${runNumber}) \n\n ${description}`;
   if (cmdErr) {
-    body = cmdErr;
+    body = '```\n' + cmdErr + '\n```';
   }
   const issueNumber = parseInt(
     githubEvent.issue.url.match(/issues\/(\d+)/)?.[1] || ""
