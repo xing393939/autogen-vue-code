@@ -18,7 +18,7 @@ assert(apiKey, "failed to get openAI API key");
 
 const openai = new AzureOpenAI({
   apiVersion: "2024-02-15-preview",
-  endpoint: "https://qinhan-us.azure.openai.com/",
+  endpoint: "https://qinhan-us.openai.azure.com",
   apiKey: apiKey,
   deployment: "gpt-4-preview"
 });
