@@ -1,5 +1,5 @@
 import { retryAsync } from "https://deno.land/x/retry@v2.0.0/mod.ts";
-import OpenAI from "https://deno.land/x/openai@v4.20.1/mod.ts";
+import { AzureOpenAI } from "https://deno.land/x/openai@v4.20.1/mod.ts";
 import {
   ChatCompletionMessageParam,
   CompletionUsage,
@@ -16,9 +16,11 @@ import commitPlugin from "npm:octokit-commit-multiple-files";
 const apiKey = Deno.env.get("OPENAI_API_KEY");
 assert(apiKey, "failed to get openAI API key");
 
-const openai = new OpenAI({
+const openai = new AzureOpenAI({
+  apiVersion: "2024-02-15-preview",
+  endpoint: "https://qinhan-us.azure.openai.com/",
   apiKey: apiKey,
-  baseURL: "https://api.aiproxy.io/v1"
+  deployment: "gpt-4-preview"
 });
 
 export async function getCode(
