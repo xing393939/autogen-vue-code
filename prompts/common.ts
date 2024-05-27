@@ -17,10 +17,10 @@ const apiKey = Deno.env.get("OPENAI_API_KEY");
 assert(apiKey, "failed to get openAI API key");
 
 const openai = new AzureOpenAI({
-  apiVersion: "2024-02-15-preview",
+  apiVersion: "2024-02-01",
   endpoint: "https://qinhan-us.openai.azure.com",
   apiKey: apiKey,
-  deployment: "gpt-4-preview"
+  deployment: "gpt-4o"
 });
 
 export async function getCode(
