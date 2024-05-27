@@ -22,7 +22,7 @@ jobs:
           path: |
             vue-preview-ui/vendor
             vue-preview-ui/node_modules
-          key: ${{ runner.os }}-nodeModule2-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}-nodeModule3-${{ hashFiles('package.json') }}
       - name: Npm install
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
