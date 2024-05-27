@@ -1,11 +1,11 @@
 import { retryAsync } from "https://deno.land/x/retry@v2.0.0/mod.ts";
-import { AzureOpenAI } from "https://deno.land/x/openai@v4.20.1/mod.ts";
+import { AzureOpenAI } from "https://deno.land/x/openai@v4.45.0/mod.ts";
 import {
   ChatCompletionMessageParam,
   CompletionUsage,
-} from "https://deno.land/x/openai@v4.20.1/resources/mod.ts";
+} from "https://deno.land/x/openai@v4.45.0/resources/mod.ts";
 import { assert } from "https://deno.land/std@0.201.0/assert/assert.ts";
-import { ChatCompletionCreateParamsBase } from "https://deno.land/x/openai@v4.20.1/resources/chat/completions.ts";
+import { ChatCompletionCreateParamsBase } from "https://deno.land/x/openai@v4.45.0/resources/chat/completions.ts";
 import { fromMarkdown } from "https://esm.sh/mdast-util-from-markdown@2.0.0";
 import { visitParents } from "https://esm.sh/unist-util-visit-parents@6.0.1";
 import { toMarkdown } from "https://esm.sh/mdast-util-to-markdown@2.1.0";
