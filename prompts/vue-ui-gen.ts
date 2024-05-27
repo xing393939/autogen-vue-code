@@ -82,7 +82,7 @@ ${PLACEHOLDER_CODE}
   }
 
   const runNumber = Deno.env.get("RUN_NUMBER");
-  var body = `[Preview UI](https://xing393939.getlocx.net/autogen-vue-code/${runNumber}) \n\n ${description}`;
+  var body = `[Preview UI](https://xing393939.getlocx.net/autogen-vue-code/${runNumber}/) \n\n ${description}`;
   if (cmdErr) {
     body = '```\n' + cmdErr + '\n```';
   }
